@@ -32,27 +32,126 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    //My Way && Javascript30 short way
+    var filterAnswer = inventors.filter(inventor => {
+      return inventor.year >= 1500 && inventor.year < 1600
+    })
+
+    //Javascript30 long way of doing it. Array.prototype.filter only returns an array where a value comes back as true.
+  const fifteen = inventors.filter(function(inventor){
+    if(inventor.year >= 1500 && inventor.year < 1600){
+      return true; //keep it!
+    }
+  })
+    console.log(filterAnswer)
+    console.log(fifteen)
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+
+    //My Way && Javascript30 way
+    var firstAndLast = inventors.map(inventor => {
+      return inventor.first + ' ' + inventor.last
+    })
+
+    console.log(firstAndLast)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    //Sort is like holding two things in your hand at once and deciding which one comes first. Return 1 is first and returning negative is second
+
+
+    //Javascript30 long way
+    var oldestToYoungest = inventors.sort(function(a, b){
+      if(a.year > b.year){
+        return 1;
+      } else {
+        return -1;
+      }
+    })
+    console.table(oldestToYoungest)
+
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1)
+
+    console.table(ordered)
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    //Without the 0 as the second argument to reduce it starts off at undefined and tries to add to it. 
+
+    var totalYears = inventors.reduce((total,inventor) => {
+      return total + (inventor.passed - inventor.year)
+    }, 0)
+
+    console.log(totalYears)
+
 
     // 5. Sort the inventors by years lived
 
+    //My Way
+    var byYearsLived = inventors.sort(function(a, b){
+      if((a.passed - a.year) > (b.passed - b.year)){
+        return 1;
+      } else {return -1}
+    })
+
+    console.log(byYearsLived)
+
+    //Javascript30 way
+    const oldest = inventors.sort((a,b) => {
+      var lastGuy = a.passed - a.year;
+      var nextGuy = b.passed - b.year;
+
+      return lastGuy > nextGuy ? -1 : 1;
+    })
+
+    console.log(oldest)
+
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+    // var category = document.querySelector('.mw-content-ltr')
+
+    //Converts a node list into an array
+    // var links = [...category.querySelectorAll('a')]; 
+
+    //Or you can do this instead:
+    //var links = Array.from(category.querySelectorAll('a'))
+
+    // const de = links.map(link => link.textContent).filter(value => value.includes('de'))
+
+    // console.log(de)
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    var alpha = people.sort((lastOne, nextOne) => {
+
+      //Array destructuring to two different variables
+      var [aLast, aFirst] = lastOne.split(', ')
+      var [bLast, bFirst] = nextOne.split(', ')
+      return aLast > bLast ? 1 : -1
+    })
+
+    console.log(alpha)
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    //Starts with a blank object as second param of reduce (not the callback function) and then checks to see if there is a key name that matches the name of the item. If it doesn't then it creates one with a value of 0. Then it just increments the object's key value by one that matches the item.
+
+    const transportation = data.reduce(function(obj, item){
+      if(!obj[item]){
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    },{})
+
+    console.log(transportation)
 
   </script>
 </body>
